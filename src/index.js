@@ -131,40 +131,40 @@ app.get('/hotspotStates',(req,res) => {
     })
 
 
-// app.get('/healthyStates',(req,res) => {
+app.get('/healthyStates',(req,res) => {
 
-//     connection.aggregate(([
-//         {$project: 
+    connection.aggregate(([
+        {$project: 
             
-//                 {state : 1,
-//                     mortality: 
-//                     { $round : 
-//                         [
-//                             { $divide:[ "$death","$infected" ] },5
-//                         ]
-//                     }
-//                 }
+                {state : 1,
+                    mortality: 
+                    { $round : 
+                        [
+                            { $divide:[ "$death","$infected" ] },5
+                        ]
+                    }
+                }
             
-//         },{
-//             $match: { mortality: {$lt : 0.005} }
-//         }
-//     ]))
-//     .then((result)=>{
+        },{
+            $match: { mortality: {$lt : 0.005} }
+        }
+    ]))
+    .then((result)=>{
             
-//             let healthyStates = result.map((healthyState)=>{
-//                 return {"state": healthyState.state,"mortality": healthyState.mortality}
-//             })
-//             let response = {
-//                 "data": healthyStates
-//             }
+            let healthyStates = result.map((healthyState)=>{
+                return {"state": healthyState.state,"mortality": healthyState.mortality}
+            })
+            let response = {
+                "data": healthyStates
+            }
 
-//             res.json(response);
-//     })
-//     .catch((err)=>{
-//         res.status(404).send(err);
-//     })
+            res.json(response);
+    })
+    .catch((err)=>{
+        res.status(404).send(err);
+    })
 
-// })
+})
 
 
 
