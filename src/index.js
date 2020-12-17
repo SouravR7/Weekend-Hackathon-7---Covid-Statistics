@@ -77,10 +77,6 @@ app.get('/totalDeath',(req,res) => {
         }
     ]))
     .then((result)=>{
-
-            // let totalDeath = result.reduce((result,death)=>{
-            //     return result + death.total;
-            // },0);
             let response = {
                             "data":
                             {
@@ -97,42 +93,42 @@ app.get('/totalDeath',(req,res) => {
 
 })
 
-// app.get('/hotspotStates',(req,res) => {
+app.get('/hotspotStates',(req,res) => {
 
-//         connection.aggregate(([
-//             {$project: 
+        connection.aggregate(([
+            {$project: 
                 
-//                 {
-//                     state : 1,
-//                     rate: 
-//                     { $round : 
-//                         [{ $divide: 
-//                             [ {$subtract: ["$infected","$recovered"]}, "$infected" ] 
-//                         },5]
-//                     }
-//                 }
+                {
+                    state : 1,
+                    rate: 
+                    { $round : 
+                        [{ $divide: 
+                            [ {$subtract: ["$infected","$recovered"]}, "$infected" ] 
+                        },5]
+                    }
+                }
                 
-//             },
-//             {
-//                 $match: { rate: {$gt : 0.1} }
-//             }
-//         ]))
-//         .then((result)=>{
-//                 //console.log(result);
-//                 let hotspots = result.map((hotspot)=>{
-//                     return {"state": hotspot.state,"rate": hotspot.rate}
-//                 })
-//                 let response = {
-//                     "data": hotspots
-//                 }
+            },
+            {
+                $match: { rate: {$gt : 0.1} }
+            }
+        ]))
+        .then((result)=>{
+                //console.log(result);
+                let hotspots = result.map((hotspot)=>{
+                    return {"state": hotspot.state,"rate": hotspot.rate}
+                })
+                let response = {
+                    "data": hotspots
+                }
     
-//                 res.json(response);
-//         })
-//         .catch((err)=>{
-//             res.status(404).send(err);
-//         })
+                res.json(response);
+        })
+        .catch((err)=>{
+            res.status(404).send(err);
+        })
 
-//     })
+    })
 
 
 // app.get('/healthyStates',(req,res) => {
